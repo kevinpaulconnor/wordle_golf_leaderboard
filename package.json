@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/kevinpaulconnor/wordle_golf_leaderboard#readme",
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "pug": "^3.0.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",

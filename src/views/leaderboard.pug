@@ -26,11 +26,11 @@ html
 							th.text-center #{hole.par}
 
 				tbody
-					each standing in standings
+					each player in standings
 						tr
-							td #{standing.player}
+							td #{player.displayName}
 
-							each hole in standing.holes
+							each hole in player.holes
 								if hole.score
 									td.text-center #{hole.score}
 								else
