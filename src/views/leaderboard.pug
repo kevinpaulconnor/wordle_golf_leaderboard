@@ -18,20 +18,21 @@ html
 
 						each hole in holes
 							th.text-center #{hole.number}
-
+						th.text-uppercase.text-center Total
 					tr
 						th.text-uppercase.text-center Par
 
 						each hole in holes
 							th.text-center #{hole.par}
+						th.text-center 72
 
 				tbody
-					each player in standings
+					each player in players
 						tr
 							td #{player.displayName}
-
-							each hole in player.holes
-								if hole.score
-									td.text-center #{hole.score}
+							each hole, i in holes
+								if player.scores[i]
+									td.text-center #{player.scores[i]}
 								else
 									td
+							td.text-uppercase.text-center #{player.total}

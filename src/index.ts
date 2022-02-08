@@ -1,11 +1,11 @@
 import express from 'express';
-import testData from './defaultData';
+import generateData from './defaultData';
 const app = express()
 app.set('view engine', 'pug')
 app.set('views', `${__dirname}/views`)
 
 app.get('/test', (req, res) => {
-  res.render('leaderboard', testData);
+  res.render('leaderboard', generateData());
 })
 
 app.listen(8000, () => {

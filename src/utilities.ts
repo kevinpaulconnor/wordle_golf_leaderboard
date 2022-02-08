@@ -1,4 +1,4 @@
-import Hole from './types';
+import Hole, { Player } from './types';
 
 const generateHoles = (scores: number[] = []) :Hole[] => {
     const ret = [];
@@ -13,6 +13,17 @@ const generateHoles = (scores: number[] = []) :Hole[] => {
         ret.push(hole);
     }
     return ret;
+}
+
+export const relationToPar = (scores: number[], holes: Hole[]) :number => {
+    let result = 0;
+    holes.forEach((hole, i) => {
+        if (scores[i]) {
+            let holeResult = scores[i] - hole.par;
+            result = result + holeResult;
+        }
+    });
+    return result;
 }
 
 export default generateHoles;

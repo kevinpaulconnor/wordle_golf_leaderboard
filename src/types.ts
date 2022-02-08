@@ -4,13 +4,14 @@ type Hole = {
     score?: number
 }
 
-type Player = {
-    id: string,
+export type Player = {
+    id: number,
     displayName: string,
-    holes: Hole[],
+    scores: number[],
+    total?: number,
 }
 
-type Standings = {
+export type Standings = {
     holes: Hole[],
     players: Player[],
 }
