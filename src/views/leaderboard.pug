@@ -55,8 +55,20 @@ html
 							td #{player.displayName}
 							each hole, i in holes
 								if player.scores[i]
-									td.text-center 
-										+par(player.scores[i])
+									td.text-center
+										case player.scores[i]
+											when 2
+												+eagle(player.scores[i])
+											when 3
+												+birdie(player.scores[i])
+											when 5
+												+bogey(player.scores[i])
+											when 6
+												+doubleBogey(player.scores[i])
+											when 7
+												+tripleBogey(player.scores[i])
+											default
+												+par(player.scores[i])
 
 								else
 									td
