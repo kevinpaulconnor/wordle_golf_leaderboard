@@ -1,11 +1,22 @@
 import express from 'express';
+require('dotenv').config();
+
 import generateData from './defaultData';
+import findMessages, { gatherWordleMessages } from './wordleParser';
 const app = express()
 app.set('view engine', 'pug')
 app.set('views', `${__dirname}/views`)
 
-app.get('/test', (req, res) => {
+app.get('/', (req, res) => {
   res.render('leaderboard', generateData());
+})
+
+app.get('/gatherMessages', async (req, res) => {
+    gatherWordleMessages(() => {
+        res.json({
+            message: 'Data updated'
+        }); 
+    }); 
 })
 
 app.listen(8000, () => {

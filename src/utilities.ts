@@ -1,10 +1,12 @@
-import Hole, { Player } from './types';
+import Hole from './types';
+
+export const beforeStartWordle = 228;
 
 const generateHoles = (scores: number[] = []) :Hole[] => {
     const ret = [];
-    for (let i = 1; i < 19; i++) {
+    for (let i = 1; i <= 18; i++) {
         let hole :Hole = {
-            number: i,
+            number: beforeStartWordle + i,
             par: 4,
         };
         if (scores[i-1]) {

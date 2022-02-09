@@ -16,4 +16,11 @@ export type Standings = {
     players: Player[],
 }
 
+export type GroupMeMessage = {
+    "created_at": number,
+    "name": string,
+    "sender_id": string,
+    "text": string,
+}
+
 export default Hole;
