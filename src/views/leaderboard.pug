@@ -1,7 +1,26 @@
 mixin tripleBogey(value)
-	span.border.border-dark.p-1
-		span.border.border-dark.p-1 
+	span.border.border-dark.p-1.pt-2.pb-2
+		span.border.border-dark.p-1
 			span.border.border-dark #{value}
+
+mixin doubleBogey(value)
+	span.border.border-dark.p-1
+		span.border.border-dark #{value}
+
+mixin bogey(value)
+	span.border.border-dark.p-1
+		span #{value}
+
+mixin par(value)
+	span #{value}
+
+mixin birdie(value)
+	span.border.border-dark.p-1.rounded-circle
+		span #{value}
+
+mixin eagle(value)
+	span.border.border-dark.p-2.rounded-circle
+		span.border.border-dark.p-1.rounded-circle #{value}
 
 doctype html
 html
@@ -32,12 +51,12 @@ html
 
 				tbody
 					each player in players
-						tr
+						tr.lh-lg
 							td #{player.displayName}
 							each hole, i in holes
 								if player.scores[i]
 									td.text-center 
-										+tripleBogey(player.scores[i])
+										+par(player.scores[i])
 
 								else
 									td
