@@ -2,10 +2,10 @@ import express from 'express';
 require('dotenv').config();
 
 import generateData from './defaultData';
-import findMessages, { gatherWordleMessages } from './wordleParser';
+import { gatherWordleMessages } from './wordleParser';
 const app = express()
 app.set('view engine', 'pug')
-app.set('views', `${__dirname}/views`)
+app.set('views', ['views', '../views'])
 
 app.get('/', (req, res) => {
   res.render('leaderboard', generateData());

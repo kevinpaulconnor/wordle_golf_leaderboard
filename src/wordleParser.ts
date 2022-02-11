@@ -29,7 +29,7 @@ const parseAndWrite = (messages :GroupMeMessage[]) => {
                 .scores[arrayPosition] = parseInt(result);
         }
     });
-    fs.writeFile('./src/views/players.json',
+    fs.writeFile('./players.json',
         JSON.stringify(Object.values(playersObject)), (err :any) => {                        if (err) throw err;
         console.log('Data written to file');
     });

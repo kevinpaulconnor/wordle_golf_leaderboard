@@ -1,7 +1,7 @@
 
 import generateHoles, { relationToPar } from './utilities';
 import { Standings, Player } from './types';
-let players = require("./views/players.json");
+import players from './players.json';
 
 const generateData = () :Standings => {
 	const holes = generateHoles();
