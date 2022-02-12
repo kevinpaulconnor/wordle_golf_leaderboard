@@ -2,11 +2,9 @@
   "name": "wordle_golf_leaderboard",
   "version": "1.0.0",
   "description": "",
-  "main": "render.js",
+  "main": "index.ts",
   "scripts": {
-    "build": "tsc --project ./",
-    "start": "npm run build && node build/index.js",
-    "start:dev": "nodemon src/index.ts",
+    "build": "tsc --project ./ && node build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
