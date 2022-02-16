@@ -2,7 +2,7 @@ var axios = require('axios')
 var GROUPME_KEY = process.env.GROUPME_KEY;
 var GROUP = process.env.GROUP_ID;
 
-import { beforeStartWordle } from './shared/utilities';
+import { currentRound } from './shared/utilities';
 import { GroupMeMessage, Player } from './shared/types';
 
 const beforeTourneyStart = 1643781600;
@@ -22,7 +22,7 @@ const parseAndWrite = (messages :GroupMeMessage[]) => {
         let result = textRow[2].split('/')[0];
         if (result === 'X') { result = '7'; }
         const wordleId = parseInt(textRow[1]);
-        const arrayPosition = wordleId - beforeStartWordle - 1;
+        const arrayPosition = wordleId - currentRound.beforeStartWordle - 1;
         if (arrayPosition >= 0) {
             playersObject[message.sender_id as keyof typeof playersObject]
                 .scores[arrayPosition] = parseInt(result);

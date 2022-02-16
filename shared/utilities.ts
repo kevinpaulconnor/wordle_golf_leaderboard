@@ -1,12 +1,16 @@
 import Hole from './types';
 
-export const beforeStartWordle = 228;
+export const currentRound = {
+    id: 1,
+    beforeStartWordle: 228
+};
+
 
 const generateHoles = (scores: number[] = []) :Hole[] => {
     const ret = [];
     for (let i = 1; i <= 18; i++) {
         let hole :Hole = {
-            number: beforeStartWordle + i,
+            number: currentRound.beforeStartWordle + i,
             par: 4,
         };
         if (scores[i-1]) {
