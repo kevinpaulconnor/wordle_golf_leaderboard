@@ -1,0 +1,13 @@
+{
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "groupmeKey",
+      "environmentVariableName": "GROUPME_KEY"
+    },
+    {
+      "cloudFormationParameterName": "groupId",
+      "environmentVariableName": "GROUP_ID"
+    }
+  ]
+}

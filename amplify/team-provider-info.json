@@ -10,6 +10,16 @@
       "StackName": "amplify-wordlegolf-main-223547",
       "StackId": "arn:aws:cloudformation:us-east-1:410413917760:stack/amplify-wordlegolf-main-223547/42343400-8bbd-11ec-90c4-0a7f234b925f",
       "AmplifyAppId": "dqdapxdhvfl6y"
+    },
+    "categories": {
+      "function": {
+        "updateBoard": {
+          "groupmeKey": "LIrg8nCtuJOzLksT47kW9naSzDQy0u3dngbPzVAN",
+          "groupId": "33386463",
+          "deploymentBucketName": "amplify-wordlegolf-main-223547-deployment",
+          "s3Key": "amplify-builds/updateBoard-4f6641367341782b6873-build.zip"
+        }
+      }
     }
   }
 }

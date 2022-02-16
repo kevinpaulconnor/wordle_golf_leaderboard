@@ -1,10 +1,9 @@
-var API = require('groupme').Stateless;
-const fs = require('fs');
+var axios = require('axios')
 var GROUPME_KEY = process.env.GROUPME_KEY;
 var GROUP = process.env.GROUP_ID;
 
-import { beforeStartWordle } from './utilities'
-import { GroupMeMessage, Player } from './types';
+import { beforeStartWordle } from './shared/utilities';
+import { GroupMeMessage, Player } from './shared/types';
 
 const beforeTourneyStart = 1643781600;
 
@@ -29,21 +28,19 @@ const parseAndWrite = (messages :GroupMeMessage[]) => {
                 .scores[arrayPosition] = parseInt(result);
         }
     });
-    fs.writeFile('./players.json',
-        JSON.stringify(Object.values(playersObject)), (err :any) => {                        if (err) throw err;
-        console.log('Data written to file');
-    });
+    //fs.writeFile('./players.json',
+        //JSON.stringify(Object.values(playersObject)), (err :any) => {                        if (err) throw err;
+        console.log(JSON.stringify(Object.values(playersObject)));
+    //});
 }
 
-const findMessages = (callback :Function, options = {}, foundMessages :GroupMeMessage[]) => {
-    API.Messages.index(GROUPME_KEY, GROUP, options, function(err :any ,ret :any) {
-        if (!err) {
-            callback(ret, foundMessages);       
-        }
-    });
+const findMessages = async (before_id :string, foundMessages :GroupMeMessage[]) => {
+    const url = `https://api.groupme.com/v3/groups/${GROUP}/messages?token=${GROUPME_KEY}&before_id=${before_id}`
+    const response = await axios.get(url).catch(error => console.log(error));
+    await findTourneyShares(response.data.response, foundMessages);
 };
 
-const findTourneyShares = (response : any, foundMessages :GroupMeMessage[]) => {
+const findTourneyShares = async (response : any, foundMessages :GroupMeMessage[]) => {
     const wordleRegex = /^Wordle \d\d\d .\/\d/;
     let stop = false;
     let next = '';
@@ -56,20 +53,19 @@ const findTourneyShares = (response : any, foundMessages :GroupMeMessage[]) => {
                 next = message.id;
             } else {
                 stop = true;
-                parseAndWrite(foundMessages);
             }
         }
     })
-    if (!stop) {
-        return findMessages(findTourneyShares, {before_id: next}, foundMessages)
+    if (stop) {
+        parseAndWrite(foundMessages);
+    } else {
+        await findMessages(next, foundMessages)
     }
 };
 
-export const gatherWordleMessages = (callback :Function) => {
+const gatherWordleMessages = async () => {
     let foundMessages :any = [];
-    findMessages(findTourneyShares, {}, foundMessages)
-    callback();
-
+    await findMessages('', foundMessages);
 };
 
-export default findMessages;
+module.exports = { gatherWordleMessages }

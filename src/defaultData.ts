@@ -1,7 +1,7 @@
 
-import generateHoles, { relationToPar } from './utilities';
-import { Standings, Player } from './types';
-import players from './players.json';
+import generateHoles, { relationToPar } from '../shared/utilities';
+import { Standings, Player } from '../shared/types';
+import players from './results/players.json';
 
 const generateData = () :Standings => {
 	const holes = generateHoles();

@@ -5,6 +5,8 @@
 /dist/
 /docs/
 .idea/*
+/src/types.js
+/src/utilities.js
 
 .DS_Store
 coverage
