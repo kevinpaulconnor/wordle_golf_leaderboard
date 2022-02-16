@@ -8,6 +8,10 @@
     {
       "cloudFormationParameterName": "groupId",
       "environmentVariableName": "GROUP_ID"
+    },
+    {
+      "cloudFormationParameterName": "githubToken",
+      "environmentVariableName": "GITHUB_TOKEN"
     }
   ]
 }

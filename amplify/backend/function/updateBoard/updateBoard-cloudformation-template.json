@@ -21,6 +21,9 @@
     },
     "groupId": {
       "Type": "String"
+    },
+    "githubToken": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -81,6 +84,9 @@
             },
             "GROUP_ID": {
               "Ref": "groupId"
+            },
+            "GITHUB_TOKEN": {
+              "Ref": "githubToken"
             }
           }
         },

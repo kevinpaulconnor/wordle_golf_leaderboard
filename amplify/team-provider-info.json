@@ -14,10 +14,11 @@
     "categories": {
       "function": {
         "updateBoard": {
+          "deploymentBucketName": "amplify-wordlegolf-main-223547-deployment",
+          "s3Key": "amplify-builds/updateBoard-4f6641367341782b6873-build.zip",
           "groupmeKey": "LIrg8nCtuJOzLksT47kW9naSzDQy0u3dngbPzVAN",
           "groupId": "33386463",
-          "deploymentBucketName": "amplify-wordlegolf-main-223547-deployment",
-          "s3Key": "amplify-builds/updateBoard-4f6641367341782b6873-build.zip"
+          "githubToken": "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"
         }
       }
     }
