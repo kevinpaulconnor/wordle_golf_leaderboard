@@ -2,16 +2,12 @@
   "lambdaLayers": [],
   "environmentVariableList": [
     {
-      "cloudFormationParameterName": "groupmeKey",
-      "environmentVariableName": "GROUPME_KEY"
-    },
-    {
       "cloudFormationParameterName": "groupId",
       "environmentVariableName": "GROUP_ID"
     },
     {
-      "cloudFormationParameterName": "githubToken",
-      "environmentVariableName": "GITHUB_TOKEN"
+      "cloudFormationParameterName": "groupmeKey",
+      "environmentVariableName": "GROUPME_KEY"
     }
   ]
 }

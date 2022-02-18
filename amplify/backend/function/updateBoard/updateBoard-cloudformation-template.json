@@ -16,13 +16,10 @@
     "s3Key": {
       "Type": "String"
     },
-    "groupmeKey": {
-      "Type": "String"
-    },
     "groupId": {
       "Type": "String"
     },
-    "githubToken": {
+    "groupmeKey": {
       "Type": "String"
     }
   },
@@ -79,14 +76,11 @@
             "REGION": {
               "Ref": "AWS::Region"
             },
-            "GROUPME_KEY": {
-              "Ref": "groupmeKey"
-            },
             "GROUP_ID": {
               "Ref": "groupId"
             },
-            "GITHUB_TOKEN": {
-              "Ref": "githubToken"
+            "GROUPME_KEY": {
+              "Ref": "groupmeKey"
             }
           }
         },
