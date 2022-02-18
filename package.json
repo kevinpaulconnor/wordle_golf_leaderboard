@@ -21,6 +21,8 @@
   "homepage": "https://github.com/kevinpaulconnor/wordle_golf_leaderboard#readme",
   "dependencies": {
     "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1076.0",
+    "axios": "^0.26.0",
     "pug": "^3.0.2"
   },
   "devDependencies": {
