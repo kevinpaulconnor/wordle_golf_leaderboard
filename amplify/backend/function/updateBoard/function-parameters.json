@@ -9,5 +9,9 @@
       "cloudFormationParameterName": "groupmeKey",
       "environmentVariableName": "GROUPME_KEY"
     }
+  ],
+  "secretNames": [
+    "GROUP_ID",
+    "GROUPME_KEY"
   ]
 }

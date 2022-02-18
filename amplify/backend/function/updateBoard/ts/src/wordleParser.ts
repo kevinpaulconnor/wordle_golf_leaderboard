@@ -1,7 +1,16 @@
 var axios = require('axios')
-var GROUPME_KEY = process.env.GROUPME_KEY;
-var GROUP = process.env.GROUP_ID;
+const aws = require('aws-sdk');
 
+const { Parameters } = await (new aws.SSM())
+  .getParameters({
+    Names: ["GROUP_ID", "GROUPME_KEY"].map(secretName => process.env[secretName]),
+    WithDecryption: true,
+  })
+  .promise();
+
+// Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+const GROUP_ID = Parameters.pop().Value;
+const GROUPME_KEY = Parameters.pop().Value;
 import currentTournament from './shared/tournaments';
 import { GroupMeMessage, Player } from './shared/types';
 
@@ -35,7 +44,7 @@ const parseAndWrite = (messages :GroupMeMessage[]) => {
 }
 
 const findMessages = async (before_id :string, foundMessages :GroupMeMessage[]) => {
-    const url = `https://api.groupme.com/v3/groups/${GROUP}/messages?token=${GROUPME_KEY}&before_id=${before_id}`
+    const url = `https://api.groupme.com/v3/groups/${GROUP_ID}/messages?token=${GROUPME_KEY}&before_id=${before_id}`
     const response = await axios.get(url).catch(error => console.log(error));
     await findTourneyShares(response.data.response, foundMessages);
 };
