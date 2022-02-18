@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc --project ./ && node build/src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "amplify:updateBoard": "copyfiles -V shared/* amplify/backend/function/updateBoard/ts/src && cd amplify/backend/function/updateBoard/ts && npm install && npm run build && cd -"
+    "amplify:updateBoard": "npm install && copyfiles -V shared/* amplify/backend/function/updateBoard/ts/src && cd amplify/backend/function/updateBoard/ts && npm run build && cd -"
   },
   "repository": {
     "type": "git",
@@ -20,11 +20,11 @@
   },
   "homepage": "https://github.com/kevinpaulconnor/wordle_golf_leaderboard#readme",
   "dependencies": {
-    "copyfiles": "^2.4.1",
     "pug": "^3.0.2"
   },
   "devDependencies": {
     "@types/node": "^17.0.15",
+    "copyfiles": "^2.4.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.5"
   }
