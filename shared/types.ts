@@ -11,9 +11,12 @@ export type Player = {
     total?: number,
 }
 
-export type Standings = {
-    holes: Hole[],
-    players: Player[],
+export type Tournament = {
+    holes?: Hole[],
+    players?: Player[],
+    pars: number[],
+    name: string,
+    beforeStartWordle: number,
 }
 
 export type GroupMeMessage = {

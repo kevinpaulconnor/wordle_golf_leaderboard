@@ -1,10 +1,10 @@
 
 import generateHoles, { relationToPar } from '../shared/utilities';
-import { Standings, Player } from '../shared/types';
+import { Tournament, Player } from '../shared/types';
 import players from './results/players.json';
 
-const generateData = () :Standings => {
-	const holes = generateHoles();
+const generateData = (tournament:Tournament) :Tournament => {
+	const holes = generateHoles(tournament);
 	players.forEach( (player:Player) => {
 		player.total = relationToPar(player.scores, holes);
 	});
@@ -16,10 +16,11 @@ const generateData = () :Standings => {
 		}
 		return 0;
 	})
-	return {
+	let ret = {...tournament, 
 		players: players,
 		holes: holes,
 	}
+	return ret
 };
 
 export default generateData;

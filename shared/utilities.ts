@@ -1,21 +1,12 @@
-import Hole from './types';
+import Hole, { Tournament } from './types';
 
-export const currentRound = {
-    id: 1,
-    beforeStartWordle: 228
-};
-
-
-const generateHoles = (scores: number[] = []) :Hole[] => {
+const generateHoles = (tournament:Tournament) :Hole[] => {
     const ret = [];
     for (let i = 1; i <= 18; i++) {
         let hole :Hole = {
-            number: currentRound.beforeStartWordle + i,
-            par: 4,
+            number: tournament.beforeStartWordle + i,
+            par: tournament.pars[i-1],
         };
-        if (scores[i-1]) {
-            hole.score = scores[i-1];
-        }
         ret.push(hole);
     }
     return ret;

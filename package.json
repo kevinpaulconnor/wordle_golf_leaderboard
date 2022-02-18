@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc --project ./ && node build/index.js",
+    "build": "tsc --project ./ && node build/src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "amplify:updateBoard": "copyfiles -V shared/* amplify/backend/function/updateBoard/ts/src && cd amplify/backend/function/updateBoard/ts && npm install && npm run build && cd -"
   },
