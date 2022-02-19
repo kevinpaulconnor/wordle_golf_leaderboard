@@ -7,7 +7,7 @@ type groupmeSecrets = {
 }
 
 const generateParameters = async () :Promise<groupmeSecrets> => {
-    const Parameters = await (new aws.SSM())
+    const { Parameters } = await (new aws.SSM())
     .getParameters({
         Names: ["GROUP_ID", "GROUPME_KEY"].map(secretName => process.env[secretName]),
         WithDecryption: true,
