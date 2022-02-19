@@ -1,16 +1,25 @@
 var axios = require('axios')
 const aws = require('aws-sdk');
 
-const { Parameters } = await (new aws.SSM())
-  .getParameters({
-    Names: ["GROUP_ID", "GROUPME_KEY"].map(secretName => process.env[secretName]),
-    WithDecryption: true,
-  })
-  .promise();
+type groupmeSecrets = {
+    GROUP_ID: string,
+    GROUPME_KEY: string
+}
 
-// Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
-const GROUP_ID = Parameters.pop().Value;
-const GROUPME_KEY = Parameters.pop().Value;
+const generateParameters = async () :Promise<groupmeSecrets> => {
+    const Parameters = await (new aws.SSM())
+    .getParameters({
+        Names: ["GROUP_ID", "GROUPME_KEY"].map(secretName => process.env[secretName]),
+        WithDecryption: true,
+    })
+    .promise();
+        
+    return {
+        GROUP_ID: Parameters.pop().Value,
+        GROUPME_KEY: Parameters.pop().Value,
+    }
+}
+
 import currentTournament from './shared/tournaments';
 import { GroupMeMessage, Player } from './shared/types';
 
@@ -43,13 +52,13 @@ const parseAndWrite = (messages :GroupMeMessage[]) => {
     //});
 }
 
-const findMessages = async (before_id :string, foundMessages :GroupMeMessage[]) => {
-    const url = `https://api.groupme.com/v3/groups/${GROUP_ID}/messages?token=${GROUPME_KEY}&before_id=${before_id}`
+const findMessages = async (before_id :string, foundMessages :GroupMeMessage[], secrets :groupmeSecrets) => {
+    const url = `https://api.groupme.com/v3/groups/${secrets.GROUP_ID}/messages?token=${secrets.GROUPME_KEY}&before_id=${before_id}`
     const response = await axios.get(url).catch(error => console.log(error));
-    await findTourneyShares(response.data.response, foundMessages);
+    await findTourneyShares(response.data.response, foundMessages, secrets);
 };
 
-const findTourneyShares = async (response : any, foundMessages :GroupMeMessage[]) => {
+const findTourneyShares = async (response : any, foundMessages :GroupMeMessage[], secrets:groupmeSecrets) => {
     const wordleRegex = /^Wordle \d\d\d .\/\d/;
     let stop = false;
     let next = '';
@@ -68,13 +77,14 @@ const findTourneyShares = async (response : any, foundMessages :GroupMeMessage[]
     if (stop) {
         parseAndWrite(foundMessages);
     } else {
-        await findMessages(next, foundMessages)
+        await findMessages(next, foundMessages, secrets)
     }
 };
 
 const gatherWordleMessages = async () => {
     let foundMessages :any = [];
-    await findMessages('', foundMessages);
+    const secrets = await generateParameters();
+    await findMessages('', foundMessages, secrets);
 };
 
 module.exports = { gatherWordleMessages }

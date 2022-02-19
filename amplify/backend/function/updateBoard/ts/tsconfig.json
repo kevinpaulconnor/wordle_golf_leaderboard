@@ -12,6 +12,7 @@
     "rootDir": "./src",
     "paths": {
       "src": ["./src"]
-    }
+    },
+    "target": "ES2017",
   }
 }
