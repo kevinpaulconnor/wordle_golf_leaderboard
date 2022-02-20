@@ -4,6 +4,48 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "tournamentsResource",
+          "attributes": [
+            "BucketName"
+          ]
+        }
+      ]
+    }
+  },
+  "auth": {
+    "wordlegolf96b560af": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "loginMechanisms": [
+          "PREFERRED_USERNAME"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      }
+    }
+  },
+  "storage": {
+    "tournamentsResource": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
       "dependsOn": []
     }
   }

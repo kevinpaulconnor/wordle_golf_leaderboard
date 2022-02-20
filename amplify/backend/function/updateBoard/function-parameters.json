@@ -13,5 +13,15 @@
   "secretNames": [
     "GROUP_ID",
     "GROUPME_KEY"
-  ]
+  ],
+  "permissions": {
+    "storage": {
+      "tournamentsResource": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  }
 }

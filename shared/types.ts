@@ -12,11 +12,13 @@ export type Player = {
 }
 
 export type Tournament = {
+    id: number,
     holes?: Hole[],
     players?: Player[],
     pars: number[],
     name: string,
     beforeStartWordle: number,
+    beforeStartTime: number,
 }
 
 export type GroupMeMessage = {

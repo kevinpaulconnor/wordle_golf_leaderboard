@@ -1,5 +1,9 @@
 var axios = require('axios')
 const aws = require('aws-sdk');
+var s3 = new aws.S3();
+const bucketName = process.env.STORAGE_TOURNAMENTSRESOURCE_BUCKETNAME;
+import currentTournament from './shared/tournaments';
+import { GroupMeMessage, Player } from './shared/types';
 
 type groupmeSecrets = {
     GROUP_ID: string,
@@ -20,12 +24,21 @@ const generateParameters = async () :Promise<groupmeSecrets> => {
     }
 }
 
-import currentTournament from './shared/tournaments';
-import { GroupMeMessage, Player } from './shared/types';
+function write(item, filename) {
+    const params ={ 
+      Bucket : bucketName,
+      Key : filename,
+      Body: JSON.stringify(item),
+    };
+    return s3.putObject(params, () => {}).promise();
+  }
+  
+  function tournamentFilename(id) {
+    return `playerscores-${id}.json`;
+  }
 
-const beforeTourneyStart = 1643781600;
 
-const parseAndWrite = (messages :GroupMeMessage[]) => {
+const parseAndWrite = async (messages :GroupMeMessage[]) => {
 	const playersObject: { [key: string]: Player; } = {};
     messages.forEach(message => {
         const senderId = parseInt(message.sender_id);
@@ -46,10 +59,7 @@ const parseAndWrite = (messages :GroupMeMessage[]) => {
                 .scores[arrayPosition] = parseInt(result);
         }
     });
-    //fs.writeFile('./players.json',
-        //JSON.stringify(Object.values(playersObject)), (err :any) => {                        if (err) throw err;
-        console.log(JSON.stringify(Object.values(playersObject)));
-    //});
+    await write(playersObject, tournamentFilename(currentTournament.id));
 }
 
 const findMessages = async (before_id :string, foundMessages :GroupMeMessage[], secrets :groupmeSecrets) => {
@@ -64,7 +74,7 @@ const findTourneyShares = async (response : any, foundMessages :GroupMeMessage[]
     let next = '';
     response.messages.forEach((message :any) => {
         if (message.text) {
-            if (message.created_at > beforeTourneyStart) {
+            if (message.created_at > currentTournament.beforeStartTime) {
                 if (wordleRegex.test(message.text) === true) {
                     foundMessages.push(message);
                 }
