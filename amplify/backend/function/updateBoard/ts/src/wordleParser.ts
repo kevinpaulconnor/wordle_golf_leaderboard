@@ -85,7 +85,7 @@ const findTourneyShares = async (response : any, foundMessages :GroupMeMessage[]
         }
     })
     if (stop) {
-        parseAndWrite(foundMessages);
+        await parseAndWrite(foundMessages);
     } else {
         await findMessages(next, foundMessages, secrets)
     }
