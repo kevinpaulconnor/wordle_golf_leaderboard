@@ -1,9 +1,31 @@
-
 import generateHoles, { relationToPar } from '../shared/utilities';
 import { Tournament, Player } from '../shared/types';
-import players from './results/players.json';
+const aws = require('aws-sdk');
+var s3 = new aws.S3();
+const bucketName = 'tournamentsbucket223547-main';
 
-const generateData = (tournament:Tournament) :Tournament => {
+async function read(filename:string) {
+	try {
+	  const params = {
+		Bucket: bucketName,
+		Key: filename
+	  }
+	  const data = await s3.getObject(params).promise();
+	  return {
+		data: JSON.parse(data.Body),
+		lastModified: data.LastModified,
+	  }
+	} catch (e:any) {
+	  if (e.code === "NoSuchKey") {
+		return e.code;
+	  }
+	  throw new Error(`Could not retrieve file from S3: ${e.message}`)
+	}
+  }
+
+const generateData = async (tournament:Tournament) :Promise<Tournament> => {
+	const resp = await read(`playerscores-${tournament.id}.json`);
+	const players = Object.values(resp.data as Player[]);
 	const holes = generateHoles(tournament);
 	players.forEach( (player:Player) => {
 		player.total = relationToPar(player.scores, holes);
