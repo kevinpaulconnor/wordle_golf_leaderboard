@@ -15,12 +15,12 @@
       "function": {
         "updateBoard": {
           "deploymentBucketName": "amplify-wordlegolf-main-223547-deployment",
-          "s3Key": "amplify-builds/updateBoard-54585931414732416c46-build.zip",
+          "s3Key": "amplify-builds/updateBoard-736a306a616139697a74-build.zip",
           "secretsPathAmplifyAppId": "dqdapxdhvfl6y"
         }
       },
       "auth": {
-        "wordlegolf96b560af": {}
+        "wordlegolff32179f3": {}
       }
     }
   }

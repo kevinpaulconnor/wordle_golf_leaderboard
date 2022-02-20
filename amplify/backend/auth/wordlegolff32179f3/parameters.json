@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "wordlegolf96b560af_identitypool_96b560af",
-    "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "wordle96b560af",
-    "userPoolName": "wordlegolf96b560af_userpool_96b560af",
+    "identityPoolName": "wordlegolff32179f3_identitypool_f32179f3",
+    "allowUnauthenticatedIdentities": true,
+    "resourceNameTruncated": "wordlef32179f3",
+    "userPoolName": "wordlegolff32179f3_userpool_f32179f3",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -29,10 +29,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "wordle96b560af_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "wordlef32179f3_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "96b560af",
-    "resourceName": "wordlegolf96b560af",
+    "sharedId": "f32179f3",
+    "resourceName": "wordlegolff32179f3",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
