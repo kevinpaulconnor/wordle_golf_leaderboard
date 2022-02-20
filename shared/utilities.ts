@@ -12,11 +12,13 @@ const generateHoles = (tournament:Tournament) :Hole[] => {
     return ret;
 }
 
-export const relationToPar = (scores: number[], holes: Hole[]) :number => {
+export const relationToPar = (scores: (number | null)[], holes: Hole[]) :number => {
     let result = 0;
+    let target;
     holes.forEach((hole, i) => {
-        if (scores[i]) {
-            let holeResult = scores[i] - hole.par;
+        target = scores[i];
+        if (typeof target === 'number') {
+            let holeResult = target - hole.par;
             result = result + holeResult;
         }
     });

@@ -7,7 +7,7 @@ type Hole = {
 export type Player = {
     id: number,
     displayName: string,
-    scores: number[],
+    scores: (number | null)[],
     total?: number,
 }
 
@@ -19,6 +19,7 @@ export type Tournament = {
     name: string,
     beforeStartWordle: number,
     beforeStartTime: number,
+    overrides: Player[],
 }
 
 export type GroupMeMessage = {
