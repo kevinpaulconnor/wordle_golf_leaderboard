@@ -6,7 +6,7 @@ type Override = {
 }
 
 const overrideGenerator = (overrides:Override[]) :number[] => {
-    let ret = [18];
+    let ret = new Array(18);
     overrides.forEach(override => ret[override.position] = override.value);
     return ret;
 }
@@ -17,13 +17,13 @@ export const tournaments :Tournament[] = [{
         beforeStartWordle: 228,
         beforeStartTime: 1643781600,
         pars: [4,4,5,3,4,4,3,4,4,4,4,3,5,4,5,3,4,4],
-        overrides: [
-            {
+        overrides: {
+            "20893041": {
                 "id":20893041,
                 "displayName":"Jeff Arbor",
-                "scores":overrideGenerator([{position: 15, value: 6}])
+                "scores":overrideGenerator([{position: 14, value: 6}])
             },
-        ]
+        },
     },
 ];
 

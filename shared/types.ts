@@ -11,6 +11,8 @@ export type Player = {
     total?: number,
 }
 
+type PlayerKeyed = { [n:string]: Player}
+
 export type Tournament = {
     id: number,
     holes?: Hole[],
@@ -19,7 +21,7 @@ export type Tournament = {
     name: string,
     beforeStartWordle: number,
     beforeStartTime: number,
-    overrides: Player[],
+    overrides: PlayerKeyed,
 }
 
 export type GroupMeMessage = {

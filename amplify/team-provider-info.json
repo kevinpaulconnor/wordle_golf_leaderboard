@@ -15,7 +15,7 @@
       "function": {
         "updateBoard": {
           "deploymentBucketName": "amplify-wordlegolf-main-223547-deployment",
-          "s3Key": "amplify-builds/updateBoard-736a306a616139697a74-build.zip",
+          "s3Key": "amplify-builds/updateBoard-3876634c436e54717538-build.zip",
           "secretsPathAmplifyAppId": "dqdapxdhvfl6y"
         }
       },

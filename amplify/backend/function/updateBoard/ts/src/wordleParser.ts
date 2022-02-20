@@ -2,7 +2,7 @@ var axios = require('axios')
 const aws = require('aws-sdk');
 var s3 = new aws.S3();
 const bucketName = process.env.STORAGE_TOURNAMENTSRESOURCE_BUCKETNAME;
-import currentTournament from './shared/tournaments';
+import currentTournamentId, { tournaments } from './shared/tournaments';
 import { GroupMeMessage, Player } from './shared/types';
 
 type groupmeSecrets = {
@@ -39,7 +39,7 @@ function write(item, filename) {
 
 
 const parseAndWrite = async (messages :GroupMeMessage[]) => {
-	const playersObject: { [key: string]: Player; } = {};
+	const playersObject = tournaments[currentTournamentId].overrides;
     messages.forEach(message => {
         const senderId = parseInt(message.sender_id);
         if (!playersObject[message.sender_id as keyof typeof playersObject]) {
@@ -53,13 +53,13 @@ const parseAndWrite = async (messages :GroupMeMessage[]) => {
         let result = textRow[2].split('/')[0];
         if (result === 'X') { result = '7'; }
         const wordleId = parseInt(textRow[1]);
-        const arrayPosition = wordleId - currentTournament.beforeStartWordle - 1;
+        const arrayPosition = wordleId - tournaments[currentTournamentId].beforeStartWordle - 1;
         if (arrayPosition >= 0) {
             playersObject[message.sender_id as keyof typeof playersObject]
                 .scores[arrayPosition] = parseInt(result);
         }
     });
-    await write(playersObject, tournamentFilename(currentTournament.id));
+    await write(playersObject, tournamentFilename(currentTournamentId));
 }
 
 const findMessages = async (before_id :string, foundMessages :GroupMeMessage[], secrets :groupmeSecrets) => {
@@ -74,7 +74,7 @@ const findTourneyShares = async (response : any, foundMessages :GroupMeMessage[]
     let next = '';
     response.messages.forEach((message :any) => {
         if (message.text) {
-            if (message.created_at > currentTournament.beforeStartTime) {
+            if (message.created_at > tournaments[currentTournamentId].beforeStartTime) {
                 if (wordleRegex.test(message.text) === true) {
                     foundMessages.push(message);
                 }
