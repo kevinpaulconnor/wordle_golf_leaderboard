@@ -36,8 +36,7 @@ const triggerNantzBot = (tournament, secrets) => {
         text: message,
         bot_id: secrets.BOT_ID
     }
-    console.log(data);
-    //const resp = axios.post('https://api.groupme.com/v3/bots/post',data);
+    const resp = axios.post('https://api.groupme.com/v3/bots/post',data);
 }
 
 const finishTasks = async (tournament, secrets) => {
