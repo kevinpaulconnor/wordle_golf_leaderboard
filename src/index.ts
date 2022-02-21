@@ -32,6 +32,7 @@ const bucketName = 'tournamentsbucket223547-main';
     const finalTournamentData :Tournament[]= [];
     for (var i=0; i < tournaments.length; i++) {
         const result = await read(`tournament-${i}.json`);
+        result.last = i === tournaments.length-1;
         finalTournamentData.push(result)
     }
     fs.writeFile('build/index.html', fn(finalTournamentData[currentTournamentId]), (err :any) => {

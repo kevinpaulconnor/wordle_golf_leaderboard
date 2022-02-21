@@ -11,12 +11,14 @@ const overrideGenerator = (overrides:Override[]) :number[] => {
     return ret;
 }
 
-export const tournaments :Tournament[] = [{
+export const tournaments :Tournament[] = [
+    {
         name: "Phoenix Open",
         id: 0,
         beforeStartWordle: 228,
         beforeStartTime: 1643781600,
-        pars: [4,4,5,3,4,4,3,4,4,4,4,3,5,4,5,3,4,4],
+        pars: [4,4,5,3,4,4,3,4,4,
+            4,4,3,5,4,5,3,4,4],
         overrides: {
             "20893041": {
                 "id":20893041,
@@ -24,6 +26,15 @@ export const tournaments :Tournament[] = [{
                 "scores":overrideGenerator([{position: 14, value: 6}])
             },
         },
+    },
+    {
+        name: "Players Championship",
+        id: 1,
+        beforeStartWordle: 246,
+        beforeStartTime: 1645250400,
+        pars: [4,5,3,4,4,4,4,3,5,
+            4,5,4,3,4,4,5,3,4],
+        overrides: {},
     },
 ];
 
