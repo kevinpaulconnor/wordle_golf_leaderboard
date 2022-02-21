@@ -24,7 +24,6 @@ const generateParameters = async () :Promise<groupmeSecrets> => {
     const WEBHOOK_URL = Parameters.pop().Value;
     const GROUP_ID = Parameters.pop().Value;
     const GROUPME_KEY = Parameters.pop().Value;
-    console.log(WEBHOOK_URL, GROUP_ID, GROUPME_KEY);
     return {
         GROUP_ID: GROUP_ID,
         GROUPME_KEY: GROUPME_KEY,
@@ -104,7 +103,7 @@ const parseAndWrite = async (messages :GroupMeMessage[], secrets:groupmeSecrets)
     }
 
     await write(ret, tournamentFilename(currentTournamentId));
-    await finishTasks(ret, secrets.WEBHOOK_URL);
+    await finishTasks(ret, secrets);
 }
 
 const findMessages = async (before_id :string, foundMessages :GroupMeMessage[], secrets :groupmeSecrets) => {
