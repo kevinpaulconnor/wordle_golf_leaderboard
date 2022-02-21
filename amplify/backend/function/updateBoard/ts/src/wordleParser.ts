@@ -47,7 +47,7 @@ function write(item, filename) {
 const calculateLeaders = (players:Player[]) :string[] => {
     let ret = [players[0].displayName];
     let leadingTotal = players[0].total;
-    for(var i=0; i < players.length; i++) {
+    for(var i=1; i < players.length; i++) {
         if (players[i].total === leadingTotal) {
             ret.push(players[i].displayName);
         }

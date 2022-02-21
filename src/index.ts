@@ -28,14 +28,19 @@ const bucketName = 'tournamentsbucket223547-main';
         }
     }
 
-    let fn = pug.compileFile('views/leaderboard.pug')
+    let fn = pug.compileFile('views/leaderboard.pug');
+    let scheduleFn = pug.compileFile('views/schedule.pug');
     const finalTournamentData :Tournament[]= [];
     for (var i=0; i < tournaments.length; i++) {
-        const result = await read(`tournament-${i}.json`);
+        let result = await read(`tournament-${i}.json`);
         result.last = i === tournaments.length-1;
         finalTournamentData.push(result)
     }
     fs.writeFile('build/index.html', fn(finalTournamentData[currentTournamentId]), (err :any) => {
+        if (err) throw err;
+        console.log('Data written to file');
+    });
+    fs.writeFile('build/schedule.html', fn({data: finalTournamentData, current: currentTournamentId}), (err :any) => {
         if (err) throw err;
         console.log('Data written to file');
     });
