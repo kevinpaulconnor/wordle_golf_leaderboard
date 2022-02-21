@@ -21,9 +21,9 @@ const generateParameters = async () :Promise<groupmeSecrets> => {
     })
     .promise();
         
-        const GROUP_ID = Parameters.pop().Value;
-        const GROUPME_KEY = Parameters.pop().Value;
-        const WEBHOOK_URL = Parameters.pop().Value;
+    const WEBHOOK_URL = Parameters.pop().Value;
+    const GROUP_ID = Parameters.pop().Value;
+    const GROUPME_KEY = Parameters.pop().Value;
     return {
         GROUP_ID: GROUP_ID,
         GROUPME_KEY: GROUPME_KEY,
