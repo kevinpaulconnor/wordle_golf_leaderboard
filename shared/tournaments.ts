@@ -50,6 +50,6 @@ export const tournaments :Tournament[] = [
     },
 ];
 
-const currentTournamentId = 0;
+const currentTournamentId = 1;
 
 export default currentTournamentId;
