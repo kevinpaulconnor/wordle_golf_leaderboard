@@ -3,17 +3,20 @@ const aws = require('aws-sdk');
 var s3 = new aws.S3();
 const bucketName = process.env.STORAGE_TOURNAMENTSRESOURCE_BUCKETNAME;
 import currentTournamentId, { tournaments } from './shared/tournaments';
-import { GroupMeMessage, Player } from './shared/types';
+import { GroupMeMessage, Player, Tournament } from './shared/types';
+import generateHoles, { relationToPar } from './utilities';
+import finishTasks from './finish';
 
 type groupmeSecrets = {
     GROUP_ID: string,
-    GROUPME_KEY: string
+    GROUPME_KEY: string,
+    WEBHOOK_URL: string,
 }
 
 const generateParameters = async () :Promise<groupmeSecrets> => {
     const { Parameters } = await (new aws.SSM())
     .getParameters({
-        Names: ["GROUP_ID", "GROUPME_KEY"].map(secretName => process.env[secretName]),
+        Names: ["GROUP_ID", "GROUPME_KEY", "WEBHOOK_URL"].map(secretName => process.env[secretName]),
         WithDecryption: true,
     })
     .promise();
@@ -21,6 +24,7 @@ const generateParameters = async () :Promise<groupmeSecrets> => {
     return {
         GROUP_ID: Parameters.pop().Value,
         GROUPME_KEY: Parameters.pop().Value,
+        WEBHOOK_URL: Parameters.pop().Value,
     }
 }
 
@@ -34,11 +38,25 @@ function write(item, filename) {
   }
   
   function tournamentFilename(id) {
-    return `playerscores-${id}.json`;
+    return `tournament-${id}.json`;
   }
 
+const calculateLeaders = (players:Player[]) :string[] => {
+    let ret = [players[0].displayName];
+    let leadingTotal = players[0].total;
+    for(var i=0; i < players.length; i++) {
+        if (players[i].total === leadingTotal) {
+            ret.push(players[i].displayName);
+        }
+    }
+    return ret;
+}
 
-const parseAndWrite = async (messages :GroupMeMessage[]) => {
+const calculateLastDay = (tournament:Tournament) :boolean => {
+    return tournament.holes[17].number === tournament.beforeStartWordle + 18;
+}
+
+const parseAndWrite = async (messages :GroupMeMessage[], secrets:groupmeSecrets) => {
 	const playersObject = tournaments[currentTournamentId].overrides;
     messages.forEach(message => {
         const senderId = parseInt(message.sender_id);
@@ -59,7 +77,30 @@ const parseAndWrite = async (messages :GroupMeMessage[]) => {
                 .scores[arrayPosition] = parseInt(result);
         }
     });
-    await write(playersObject, tournamentFilename(currentTournamentId));
+    let currentTournament = tournaments[currentTournamentId];
+    const holes = generateHoles(currentTournament);
+    const playersArray = Object.values(playersObject);
+	playersArray.forEach( (player:Player) => {
+		player.total = relationToPar(player.scores, holes);
+	});
+	playersArray.sort((a:Player, b:Player) => {
+		if (a.total !== undefined && b.total !== undefined) {
+			if (a.total < b.total) return -1;
+			else if (b.total < a.total) return 1;
+			else return 0;
+		}
+		return 0;
+	})
+
+	let ret = {...currentTournament, 
+		players: playersArray,
+		holes: holes,
+        leaders: calculateLeaders(playersArray),
+        lastDay: calculateLastDay(currentTournament)
+    }
+
+    await write(ret, tournamentFilename(currentTournamentId));
+    await finishTasks(ret, secrets.WEBHOOK_URL);
 }
 
 const findMessages = async (before_id :string, foundMessages :GroupMeMessage[], secrets :groupmeSecrets) => {
@@ -85,7 +126,7 @@ const findTourneyShares = async (response : any, foundMessages :GroupMeMessage[]
         }
     })
     if (stop) {
-        await parseAndWrite(foundMessages);
+        await parseAndWrite(foundMessages, secrets);
     } else {
         await findMessages(next, foundMessages, secrets)
     }

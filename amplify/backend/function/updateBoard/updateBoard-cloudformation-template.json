@@ -123,6 +123,50 @@
             },
             "STORAGE_TOURNAMENTSRESOURCE_BUCKETNAME": {
               "Ref": "storagetournamentsResourceBucketName"
+            },
+            "WEBHOOK_URL": {
+              "Fn::Join": [
+                "",
+                [
+                  {
+                    "Fn::Sub": [
+                      "/amplify/${appId}/${env}/AMPLIFY_${functionName}_",
+                      {
+                        "appId": {
+                          "Ref": "secretsPathAmplifyAppId"
+                        },
+                        "env": {
+                          "Ref": "env"
+                        },
+                        "functionName": "updateBoard"
+                      }
+                    ]
+                  },
+                  "WEBHOOK_URL"
+                ]
+              ]
+            },
+            "BOT_ID": {
+              "Fn::Join": [
+                "",
+                [
+                  {
+                    "Fn::Sub": [
+                      "/amplify/${appId}/${env}/AMPLIFY_${functionName}_",
+                      {
+                        "appId": {
+                          "Ref": "secretsPathAmplifyAppId"
+                        },
+                        "env": {
+                          "Ref": "env"
+                        },
+                        "functionName": "updateBoard"
+                      }
+                    ]
+                  },
+                  "BOT_ID"
+                ]
+              ]
             }
           }
         },

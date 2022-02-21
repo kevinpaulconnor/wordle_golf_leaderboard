@@ -1,4 +1,4 @@
-import Hole, { Tournament } from './types';
+import Hole, { Tournament } from './shared/types';
 
 const generateHoles = (tournament:Tournament) :Hole[] => {
     const ret = [];

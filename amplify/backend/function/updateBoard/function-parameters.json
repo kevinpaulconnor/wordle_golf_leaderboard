@@ -12,7 +12,9 @@
   ],
   "secretNames": [
     "GROUP_ID",
-    "GROUPME_KEY"
+    "GROUPME_KEY",
+    "WEBHOOK_URL",
+    "BOT_ID"
   ],
   "permissions": {
     "storage": {
