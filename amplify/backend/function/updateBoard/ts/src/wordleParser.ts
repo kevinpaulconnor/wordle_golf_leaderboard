@@ -22,9 +22,9 @@ const generateParameters = async () :Promise<groupmeSecrets> => {
     })
     .promise();
         
-    const BOT_ID = Parameters.pop().Value;
     const WEBHOOK_URL = Parameters.pop().Value;
     const GROUP_ID = Parameters.pop().Value;
+    const BOT_ID = Parameters.pop().Value;
     const GROUPME_KEY = Parameters.pop().Value;
     console.log(BOT_ID, WEBHOOK_URL, GROUPME_KEY, GROUP_ID)
     return {
