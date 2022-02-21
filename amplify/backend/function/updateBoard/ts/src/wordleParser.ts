@@ -3,7 +3,7 @@ const aws = require('aws-sdk');
 var s3 = new aws.S3();
 const bucketName = process.env.STORAGE_TOURNAMENTSRESOURCE_BUCKETNAME;
 import currentTournamentId, { tournaments } from './shared/tournaments';
-import { GroupMeMessage, Player, Tournament } from './shared/types';
+import { GroupMeMessage, Player, Tournament, Hole } from './shared/types';
 import generateHoles, { relationToPar } from './utilities';
 import finishTasks from './finish';
 
@@ -55,8 +55,8 @@ const calculateLeaders = (players:Player[]) :string[] => {
     return ret;
 }
 
-const calculateLastDay = (tournament:Tournament) :boolean => {
-    return tournament.holes[17].number === tournament.beforeStartWordle + 18;
+const calculateLastDay = (tournament:Tournament, holes:Hole[]) :boolean => {
+    return holes[17].number === tournament.beforeStartWordle + 18;
 }
 
 const parseAndWrite = async (messages :GroupMeMessage[], secrets:groupmeSecrets) => {
@@ -99,7 +99,7 @@ const parseAndWrite = async (messages :GroupMeMessage[], secrets:groupmeSecrets)
 		players: playersArray,
 		holes: holes,
         leaders: calculateLeaders(playersArray),
-        lastDay: calculateLastDay(currentTournament)
+        lastDay: calculateLastDay(currentTournament, holes)
     }
 
     await write(ret, tournamentFilename(currentTournamentId));

@@ -1,4 +1,4 @@
-type Hole = {
+export type Hole = {
     number: number,
     par: number,
     score?: number
