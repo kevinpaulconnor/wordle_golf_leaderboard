@@ -1,17 +1,5 @@
 import Hole, { Tournament } from './shared/types';
 
-const generateHoles = (tournament:Tournament) :Hole[] => {
-    const ret = [];
-    for (let i = 1; i <= 18; i++) {
-        let hole :Hole = {
-            number: tournament.beforeStartWordle + i,
-            par: tournament.pars[i-1],
-        };
-        ret.push(hole);
-    }
-    return ret;
-}
-
 export const relationToPar = (scores: (number | null)[], holes: Hole[]) :number => {
     let result = 0;
     let target;
@@ -25,4 +13,4 @@ export const relationToPar = (scores: (number | null)[], holes: Hole[]) :number 
     return result;
 }
 
-export default generateHoles;
+export default relationToPar;

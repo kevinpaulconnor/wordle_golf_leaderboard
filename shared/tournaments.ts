@@ -1,4 +1,4 @@
-import { Tournament } from "./types"
+import { Tournament, Hole } from "./types"
 
 type Override = {
     position: number,
@@ -8,6 +8,18 @@ type Override = {
 const overrideGenerator = (overrides:Override[]) :number[] => {
     let ret = new Array(18);
     overrides.forEach(override => ret[override.position] = override.value);
+    return ret;
+}
+
+export const generateHoles = (tournament:Tournament) :Hole[] => {
+    const ret = [];
+    for (let i = 1; i <= 18; i++) {
+        let hole :Hole = {
+            number: tournament.beforeStartWordle + i,
+            par: tournament.pars[i-1],
+        };
+        ret.push(hole);
+    }
     return ret;
 }
 

@@ -31,7 +31,7 @@ const triggerNantzBot = (tournament, secrets) => {
             message = `${randomMessage} The current leader of ${tournament.name} is ${leaders}`;
         }
     }
-
+    message += ' https://wordlegolf.highpostsoftware.com';
     const data = {
         text: message,
         bot_id: secrets.BOT_ID
