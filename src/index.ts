@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 var pug = require('pug');
-import currentTournamentId, { tournaments} from '../shared/tournaments';
+import currentTournamentId, { tournaments, generateHoles } from '../shared/tournaments';
 import { Tournament } from '../shared/types';
 const aws = require('aws-sdk');
 var s3 = new aws.S3();
@@ -33,19 +33,25 @@ const bucketName = 'tournamentsbucket223547-main';
     const finalTournamentData :Tournament[]= [];
     for (var i=0; i < tournaments.length; i++) {
         let result = await read(`tournament-${i}.json`);
-        result.last = i === tournaments.length-1;
-        finalTournamentData.push(result)
+        if (result === 'NoSuchKey') {
+            result = {
+                data: tournaments[i]
+            };
+            result.data.holes = generateHoles(result.data);
+        }
+        result.data.last = i === tournaments.length-1;
+        finalTournamentData.push(result.data)
     }
     fs.writeFile('build/index.html', fn(finalTournamentData[currentTournamentId]), (err :any) => {
         if (err) throw err;
         console.log('Data written to file');
     });
-    fs.writeFile('build/schedule.html', fn({data: finalTournamentData, current: currentTournamentId}), (err :any) => {
+    fs.writeFile('build/schedule.html', scheduleFn({data: finalTournamentData, current: currentTournamentId}), (err :any) => {
         if (err) throw err;
         console.log('Data written to file');
     });
-    finalTournamentData.forEach(t => {
-        fs.writeFile(`build/${currentTournamentId}.html`, fn(finalTournamentData[currentTournamentId]), (err :any) => {
+    finalTournamentData.forEach((t, i) => {
+        fs.writeFile(`build/${i}.html`, fn(finalTournamentData[i]), (err :any) => {
             if (err) throw err;
             console.log('Data written to file');
         });

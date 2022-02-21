@@ -32,11 +32,21 @@ html
 
   body
     div.container.my-4
-      if id !== 0
-        a(href="#{id - 1}.html") Previous Tournament
+
       h2.text-center.mb-4 #{name} Leaderboard
-      if id !== last
-        //- a(href=#{id - 1}.html) Next Tournament
+      div.row
+        div.col-sm.text-center
+          if id !== 0
+            a(href=`${id - 1}.html`) Previous Tournament
+          else
+            span
+        div.col-sm.text-center
+          a(href=`schedule.html`) Schedule and Results 
+        div.col-sm.text-center
+          if !last
+            a(href=`${id + 1}.html`) Next Tournament
+          else
+            span
       table.table.table-sm.table-striped
         thead
           tr
@@ -53,28 +63,32 @@ html
             th.text-center 72
 
         tbody
-          each player in players
-            tr.lh-lg
-              td #{player.displayName}
-              each hole, i in holes
-                if player.scores[i]
-                  td.text-center
-                    case player.scores[i] - holes[i].par
-                      when -2
-                      when -3
-                        +eagle(player.scores[i])
-                      when -1
-                        +birdie(player.scores[i])
-                      when +1
-                        +bogey(player.scores[i])
-                      when +2
-                        +doubleBogey(player.scores[i])
-                      when +3
-                      when +4
-                        +tripleBogey(player.scores[i])
-                      default
-                        +par(player.scores[i])
-
+          if players
+            each player in players
+              tr.lh-lg
+                if player.displayName
+                  td #{player.displayName}
                 else
                   td
-              td.text-uppercase.text-center #{player.total}
+                each hole, i in holes
+                  if player.scores[i]
+                    td.text-center
+                      case player.scores[i] - holes[i].par
+                        when -2
+                        when -3
+                          +eagle(player.scores[i])
+                        when -1
+                          +birdie(player.scores[i])
+                        when +1
+                          +bogey(player.scores[i])
+                        when +2
+                          +doubleBogey(player.scores[i])
+                        when +3
+                        when +4
+                          +tripleBogey(player.scores[i])
+                        default
+                          +par(player.scores[i])
+
+                  else
+                    td
+                td.text-uppercase.text-center #{player.total}
