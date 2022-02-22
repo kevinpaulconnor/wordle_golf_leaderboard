@@ -91,4 +91,10 @@ html
 
                   else
                     td
-                td.text-uppercase.text-center #{player.total}
+                td.text-uppercase.text-center 
+                  if player.total === 0
+                    span E
+                  else if player.total > 0
+                    span +#{player.total}
+                  else
+                    span #{player.total}
