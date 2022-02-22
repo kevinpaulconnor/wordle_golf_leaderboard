@@ -58,12 +58,9 @@ const calculateLeaders = (players:Player[]) :string[] => {
     return ret;
 }
 
-const calculateLastDay = (tournament:Tournament, holes:Hole[]) :boolean => {
-    return holes[17].number === tournament.beforeStartWordle + 18;
-}
-
 const parseAndWrite = async (messages :GroupMeMessage[], secrets:groupmeSecrets) => {
 	const playersObject = tournaments[currentTournamentId].overrides;
+    let highestArrayPosition = 0;
     messages.forEach(message => {
         const senderId = parseInt(message.sender_id);
         if (!playersObject[message.sender_id as keyof typeof playersObject]) {
@@ -79,6 +76,9 @@ const parseAndWrite = async (messages :GroupMeMessage[], secrets:groupmeSecrets)
         const wordleId = parseInt(textRow[1]);
         const arrayPosition = wordleId - tournaments[currentTournamentId].beforeStartWordle - 1;
         if (arrayPosition >= 0) {
+            if (arrayPosition > highestArrayPosition) {
+                highestArrayPosition = arrayPosition;
+            }
             playersObject[message.sender_id as keyof typeof playersObject]
                 .scores[arrayPosition] = parseInt(result);
         }
@@ -102,7 +102,7 @@ const parseAndWrite = async (messages :GroupMeMessage[], secrets:groupmeSecrets)
 		players: playersArray,
 		holes: holes,
         leaders: calculateLeaders(playersArray),
-        lastDay: calculateLastDay(currentTournament, holes)
+        lastDay: highestArrayPosition === 17,
     }
 
     await write(ret, tournamentFilename(currentTournamentId));
