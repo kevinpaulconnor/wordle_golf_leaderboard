@@ -1,6 +1,8 @@
 var axios = require('axios');
+import { Tournament } from "./shared/types";
+import { groupmeSecrets } from "src";
 
-const triggerNantzBot = async (tournament, secrets) => {
+const triggerNantzBot = async (tournament:Tournament, secrets: groupmeSecrets) => {
     const introMessages = ['A tradition unlike any other.', 'Hello friends.', 'Hallo Freunde.', 'Hola amigos.', 
         'Nǐ hǎo péngyǒu.', 'marhaban ya aisdiqa.', 'Bonjour les amis.', 'Hailo mitron.', 'Hyālō bandhurā.', 
         'Halo teman teman.', 'Olá amigos.', "Privet druz'ya."];
@@ -39,11 +41,4 @@ const triggerNantzBot = async (tournament, secrets) => {
     const resp = await axios.post('https://api.groupme.com/v3/bots/post',data);
 }
 
-const finishTasks = async (tournament, secrets) => {
-    //rebuild front end
-    await axios.post(secrets.WEBHOOK_URL, {});
-    await triggerNantzBot(tournament, secrets);
-;
-}
-
-export default finishTasks;
+export default triggerNantzBot;

@@ -1,33 +1,10 @@
-
-
 const fs = require('fs');
 var pug = require('pug');
 import currentTournamentId, { tournaments, generateHoles } from '../shared/tournaments';
+import read from '../shared/s3';
 import { Tournament } from '../shared/types';
-const aws = require('aws-sdk');
-var s3 = new aws.S3();
-const bucketName = 'tournamentsbucket223547-main';
 
 (async () => {
-    async function read(filename:string) {
-        try {
-            const params = {
-                Bucket: bucketName,
-                Key: filename
-            }
-            const data = await s3.getObject(params).promise();
-            return {
-                data: JSON.parse(data.Body),
-                lastModified: data.LastModified,
-            }
-        } catch (e:any) {
-            if (e.code === "NoSuchKey") {
-                return e.code;
-            }
-            throw new Error(`Could not retrieve file from S3: ${e.message}`)
-        }
-    }
-
     let fn = pug.compileFile('views/leaderboard.pug');
     let scheduleFn = pug.compileFile('views/schedule.pug');
     const finalTournamentData :Tournament[]= [];

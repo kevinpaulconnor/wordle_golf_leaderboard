@@ -22,6 +22,8 @@ export type Tournament = {
     beforeStartWordle: number,
     beforeStartTime: number,
     overrides: PlayerKeyed,
+    leaders?: string[],
+    lastDay?: number,
 }
 
 export type GroupMeMessage = {

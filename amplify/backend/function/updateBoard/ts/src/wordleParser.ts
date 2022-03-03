@@ -1,51 +1,13 @@
 var axios = require('axios')
-const aws = require('aws-sdk');
-var s3 = new aws.S3();
-const bucketName = process.env.STORAGE_TOURNAMENTSRESOURCE_BUCKETNAME;
 import currentTournamentId, { tournaments, generateHoles } from './shared/tournaments';
-import { GroupMeMessage, Player, Tournament, Hole } from './shared/types';
+import { GroupMeMessage, Player } from './shared/types';
+import { write } from './shared/s3';
+import { groupmeSecrets } from 'src';
 import relationToPar from './utilities';
-import finishTasks from './finish';
-
-type groupmeSecrets = {
-    BOT_ID: string,
-    GROUP_ID: string,
-    GROUPME_KEY: string,
-    WEBHOOK_URL: string,
-}
-
-const generateParameters = async () :Promise<groupmeSecrets> => {
-    const { Parameters } = await (new aws.SSM())
-    .getParameters({
-        Names: ["GROUP_ID", "GROUPME_KEY", "WEBHOOK_URL", "BOT_ID"].map(secretName => process.env[secretName]),
-        WithDecryption: true,
-    })
-    .promise();
-        
-    const WEBHOOK_URL = Parameters.pop().Value;
-    const GROUP_ID = Parameters.pop().Value;
-    const GROUPME_KEY = Parameters.pop().Value;
-    const BOT_ID = Parameters.pop().Value;
-    return {
-        BOT_ID: BOT_ID,
-        GROUP_ID: GROUP_ID,
-        GROUPME_KEY: GROUPME_KEY,
-        WEBHOOK_URL: WEBHOOK_URL,
-    }
-}
-
-function write(item, filename) {
-    const params ={ 
-      Bucket : bucketName,
-      Key : filename,
-      Body: JSON.stringify(item),
-    };
-    return s3.putObject(params, () => {}).promise();
-  }
   
-  function tournamentFilename(id) {
+function tournamentFilename(id) {
     return `tournament-${id}.json`;
-  }
+}
 
 const calculateLeaders = (players:Player[]) :string[] => {
     let ret = [players[0].displayName];
@@ -106,7 +68,8 @@ const parseAndWrite = async (messages :GroupMeMessage[], secrets:groupmeSecrets)
     }
 
     await write(ret, tournamentFilename(currentTournamentId));
-    await finishTasks(ret, secrets);
+    //rebuild front end
+    await axios.post(secrets.WEBHOOK_URL, {});
 }
 
 const findMessages = async (before_id :string, foundMessages :GroupMeMessage[], secrets :groupmeSecrets) => {
@@ -138,9 +101,8 @@ const findTourneyShares = async (response : any, foundMessages :GroupMeMessage[]
     }
 };
 
-const gatherWordleMessages = async () => {
+const gatherWordleMessages = async (secrets) => {
     let foundMessages :any = [];
-    const secrets = await generateParameters();
     await findMessages('', foundMessages, secrets);
 };
 
