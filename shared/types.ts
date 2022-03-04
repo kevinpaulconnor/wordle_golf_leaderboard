@@ -1,7 +1,8 @@
 export type Hole = {
     number: number,
     par: number,
-    score?: number
+    score?: number,
+    average?: number
 }
 
 export type Player = {
@@ -17,11 +18,12 @@ export type Tournament = {
     id: number,
     holes?: Hole[],
     players?: Player[],
-    pars: number[],
     name: string,
     beforeStartWordle: number,
     beforeStartTime: number,
     overrides: PlayerKeyed,
+    leaders?: string[],
+    lastDay?: number,
 }
 
 export type GroupMeMessage = {

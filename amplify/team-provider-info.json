@@ -1,33 +1,62 @@
 {
-  "main": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-wordlegolf-main-223547-authRole",
-      "UnauthRoleArn": "arn:aws:iam::410413917760:role/amplify-wordlegolf-main-223547-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::410413917760:role/amplify-wordlegolf-main-223547-authRole",
-      "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-wordlegolf-main-223547-deployment",
-      "UnauthRoleName": "amplify-wordlegolf-main-223547-unauthRole",
-      "StackName": "amplify-wordlegolf-main-223547",
-      "StackId": "arn:aws:cloudformation:us-east-1:410413917760:stack/amplify-wordlegolf-main-223547/42343400-8bbd-11ec-90c4-0a7f234b925f",
-      "AmplifyAppId": "dqdapxdhvfl6y"
+    "main": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-wordlegolf-main-223547-authRole",
+            "UnauthRoleArn": "arn:aws:iam::410413917760:role/amplify-wordlegolf-main-223547-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::410413917760:role/amplify-wordlegolf-main-223547-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-wordlegolf-main-223547-deployment",
+            "UnauthRoleName": "amplify-wordlegolf-main-223547-unauthRole",
+            "StackName": "amplify-wordlegolf-main-223547",
+            "StackId": "arn:aws:cloudformation:us-east-1:410413917760:stack/amplify-wordlegolf-main-223547/42343400-8bbd-11ec-90c4-0a7f234b925f",
+            "AmplifyAppId": "dqdapxdhvfl6y"
+        },
+        "categories": {
+            "function": {
+                "updateBoard": {
+                    "deploymentBucketName": "amplify-wordlegolf-main-223547-deployment",
+                    "s3Key": "amplify-builds/updateBoard-3876634c436e54717538-build.zip",
+                    "secretsPathAmplifyAppId": "dqdapxdhvfl6y"
+                }
+            },
+            "auth": {
+                "wordlegolff32179f3": {}
+            },
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "dqdapxdhvfl6y",
+                    "type": "cicd"
+                }
+            }
+        }
     },
-    "categories": {
-      "function": {
-        "updateBoard": {
-          "deploymentBucketName": "amplify-wordlegolf-main-223547-deployment",
-          "s3Key": "amplify-builds/updateBoard-3876634c436e54717538-build.zip",
-          "secretsPathAmplifyAppId": "dqdapxdhvfl6y"
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-wordlegolf-dev-233848-authRole",
+            "UnauthRoleArn": "arn:aws:iam::410413917760:role/amplify-wordlegolf-dev-233848-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::410413917760:role/amplify-wordlegolf-dev-233848-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-wordlegolf-dev-233848-deployment",
+            "UnauthRoleName": "amplify-wordlegolf-dev-233848-unauthRole",
+            "StackName": "amplify-wordlegolf-dev-233848",
+            "StackId": "arn:aws:cloudformation:us-east-1:410413917760:stack/amplify-wordlegolf-dev-233848/356f9a60-9ab4-11ec-b972-12804ad4ed15",
+            "AmplifyAppId": "dqdapxdhvfl6y"
+        },
+        "categories": {
+            "auth": {
+                "wordlegolff32179f3": {}
+            },
+            "function": {
+                "updateBoard": {
+                    "secretsPathAmplifyAppId": "dqdapxdhvfl6y"
+                }
+            },
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "dqdapxdhvfl6y",
+                    "type": "cicd"
+                }
+            }
         }
-      },
-      "auth": {
-        "wordlegolff32179f3": {}
-      },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "dqdapxdhvfl6y",
-          "type": "cicd"
-        }
-      }
     }
-  }
 }

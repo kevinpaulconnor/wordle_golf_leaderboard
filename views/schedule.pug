@@ -21,7 +21,7 @@ html
               td.text-center 
                   a(href=`${i}.html`) #{tournament.name}
               td.text-center #{tournament.beforeStartWordle + 1} - #{tournament.beforeStartWordle + 18}
-              if tournament.id !== data.current
+              if tournament.id !== current
                   td.text-center #{tournament.leaders}
               else
                   td
