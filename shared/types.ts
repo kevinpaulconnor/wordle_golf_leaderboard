@@ -17,7 +17,6 @@ export type Tournament = {
     id: number,
     holes?: Hole[],
     players?: Player[],
-    pars: number[],
     name: string,
     beforeStartWordle: number,
     beforeStartTime: number,
