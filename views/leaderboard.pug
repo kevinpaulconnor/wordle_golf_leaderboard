@@ -71,7 +71,10 @@ html
           if players
             each player in players
               tr.lh-lg
-                if player.displayName
+                if player.displayName && player.displayName === 'Reilly'
+                  td
+                    marquee #{player.displayName}
+                else if player.displayName 
                   td #{player.displayName}
                 else
                   td
