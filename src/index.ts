@@ -14,8 +14,8 @@ import { Tournament } from '../shared/types';
             result = {
                 data: tournaments[i]
             };
-            result.data.holes = generateHoles(result.data);
         }
+        result.data.holes = generateHoles(result.data);
         result.data.last = i === tournaments.length-1;
         finalTournamentData.push(result.data)
     }

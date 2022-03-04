@@ -61,6 +61,11 @@ html
             each hole in holes
               th.text-center #{hole.par}
             th.text-center 72
+          tr
+            th.text-uppercase.text-center Average
+            each hole in holes
+              th.text-center #{hole.average}
+            th.text-center
 
         tbody
           if players

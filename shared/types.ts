@@ -1,7 +1,8 @@
 export type Hole = {
     number: number,
     par: number,
-    score?: number
+    score?: number,
+    average?: number
 }
 
 export type Player = {

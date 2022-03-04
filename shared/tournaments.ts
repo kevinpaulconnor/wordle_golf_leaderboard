@@ -18,6 +18,22 @@ export const generateHoles = (tournament:Tournament) :Hole[] => {
             number: tournament.beforeStartWordle + i,
             par: 4,
         };
+        if (tournament.players) {
+            let playerCount = 0;
+            let runningTotal = 0;
+            let target;
+            for (let j = 0; j < tournament.players.length; j++) {
+                target = tournament.players[j].scores[i-1];
+                if (typeof target === 'number') {
+                    playerCount += 1;
+                    runningTotal += target;
+                }
+            }
+            if (playerCount > 0) {
+                let average = runningTotal / playerCount;
+                hole.average = Math.round(average * 10) / 10;
+            }
+        }
         ret.push(hole);
     }
     return ret;
