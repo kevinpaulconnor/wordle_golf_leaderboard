@@ -69,7 +69,9 @@ const parseAndWrite = async (messages :GroupMeMessage[], secrets:groupmeSecrets)
 
     await write(ret, tournamentFilename(currentTournamentId));
     //rebuild front end
-    await axios.post(secrets.WEBHOOK_URL, {});
+    if (process.env.ENV === 'main') {
+        await axios.post(secrets.WEBHOOK_URL, {});
+    }
 }
 
 const findMessages = async (before_id :string, foundMessages :GroupMeMessage[], secrets :groupmeSecrets) => {

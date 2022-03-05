@@ -1,10 +1,8 @@
 require('dotenv').config();
 const aws = require('aws-sdk');
 var s3 = new aws.S3();
-let bucketName = 'tournamentsbucket233848-dev';
-if (process.env.AWS_BRANCH === 'main') {
-    bucketName = 'tournamentsbucket223547-main';
-}
+let bucketName = process.env.STORAGE_TOURNAMENTSRESOURCE_BUCKETNAME;
+
 async function read(filename:string) {
     try {
         const params = {
