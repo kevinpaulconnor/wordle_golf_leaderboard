@@ -1,12 +1,13 @@
 const fs = require('fs');
 var pug = require('pug');
-import currentTournamentId, { tournaments, generateHoles } from '../shared/tournaments';
+import { tournaments, generateHoles } from '../shared/tournaments';
 import read from '../shared/s3';
 import { Tournament } from '../shared/types';
 
 (async () => {
     let fn = pug.compileFile('views/leaderboard.pug');
     let scheduleFn = pug.compileFile('views/schedule.pug');
+    let currentTournamentId = 0;
     const finalTournamentData :Tournament[]= [];
     for (var i=0; i < tournaments.length; i++) {
         let result = await read(`tournament-${i}.json`);
@@ -14,6 +15,9 @@ import { Tournament } from '../shared/types';
             result = {
                 data: tournaments[i]
             };
+            if (currentTournamentId === 0) {
+                currentTournamentId = i - 1;
+            }
         }
         result.data.holes = generateHoles(result.data);
         result.data.last = i === tournaments.length-1;
@@ -23,7 +27,7 @@ import { Tournament } from '../shared/types';
         if (err) throw err;
         console.log('Data written to file');
     });
-    fs.writeFile('build/schedule.html', scheduleFn({data: finalTournamentData, current: currentTournamentId}), (err :any) => {
+    fs.writeFile('build/schedule.html', scheduleFn({data: finalTournamentData}), (err :any) => {
         if (err) throw err;
         console.log('Data written to file');
     });

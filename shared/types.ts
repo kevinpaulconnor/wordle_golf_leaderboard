@@ -23,7 +23,7 @@ export type Tournament = {
     beforeStartTime: number,
     overrides: PlayerKeyed,
     leaders?: string[],
-    lastDay?: number,
+    finished?: boolean,
 }
 
 export type GroupMeMessage = {
