@@ -1,13 +1,9 @@
 var axios = require('axios')
-import currentTournamentId, { tournaments, generateHoles } from './shared/tournaments';
+import { tournaments, generateHoles, tournamentFilename } from './shared/tournaments';
 import { GroupMeMessage, Player } from './shared/types';
 import { write } from './shared/s3';
 import { groupmeSecrets } from 'src';
 import relationToPar from './utilities';
-  
-function tournamentFilename(id) {
-    return `tournament-${id}.json`;
-}
 
 const calculateLeaders = (players:Player[]) :string[] => {
     let ret = [players[0].displayName];
@@ -20,7 +16,14 @@ const calculateLeaders = (players:Player[]) :string[] => {
     return ret;
 }
 
-const parseAndWrite = async (messages :GroupMeMessage[], secrets:groupmeSecrets) => {
+const getWordleBits = (text:string) :[number, number] => {
+    const textRow = text.split(' ');
+    let result = textRow[2].split('/')[0];
+    if (result === 'X') { result = '7'; }
+    return [parseInt(textRow[1]), parseInt(result)];
+}
+
+const parseAndWrite = async (messages :GroupMeMessage[], secrets:groupmeSecrets, currentTournamentId: number) => {
 	const playersObject = tournaments[currentTournamentId].overrides;
     let highestArrayPosition = 0;
     messages.forEach(message => {
@@ -32,17 +35,14 @@ const parseAndWrite = async (messages :GroupMeMessage[], secrets:groupmeSecrets)
                 scores: []
             }
         }
-        const textRow = message.text.split(' ');
-        let result = textRow[2].split('/')[0];
-        if (result === 'X') { result = '7'; }
-        const wordleId = parseInt(textRow[1]);
-        const arrayPosition = wordleId - tournaments[currentTournamentId].beforeStartWordle - 1;
+        const wordleBits = getWordleBits(message.text);
+        const arrayPosition = wordleBits[0] - tournaments[currentTournamentId].beforeStartWordle - 1;
         if (arrayPosition >= 0) {
             if (arrayPosition > highestArrayPosition) {
                 highestArrayPosition = arrayPosition;
             }
             playersObject[message.sender_id as keyof typeof playersObject]
-                .scores[arrayPosition] = parseInt(result);
+                .scores[arrayPosition] = wordleBits[1];
         }
     });
     let currentTournament = tournaments[currentTournamentId];
@@ -59,12 +59,11 @@ const parseAndWrite = async (messages :GroupMeMessage[], secrets:groupmeSecrets)
 		}
 		return 0;
 	})
-
 	let ret = {...currentTournament, 
 		players: playersArray,
 		holes: holes,
         leaders: calculateLeaders(playersArray),
-        lastDay: highestArrayPosition === 17,
+        finished: highestArrayPosition === 17,
     }
 
     await write(ret, tournamentFilename(currentTournamentId));
@@ -74,13 +73,13 @@ const parseAndWrite = async (messages :GroupMeMessage[], secrets:groupmeSecrets)
     }
 }
 
-const findMessages = async (before_id :string, foundMessages :GroupMeMessage[], secrets :groupmeSecrets) => {
+const findMessages = async (before_id :string, foundMessages :GroupMeMessage[], secrets :groupmeSecrets, currentTournamentId:number) => {
     const url = `https://api.groupme.com/v3/groups/${secrets.GROUP_ID}/messages?token=${secrets.GROUPME_KEY}&before_id=${before_id}`
     const response = await axios.get(url).catch(error => console.log(error));
-    await findTourneyShares(response.data.response, foundMessages, secrets);
+    await findTourneyShares(response.data.response, foundMessages, secrets, currentTournamentId);
 };
 
-const findTourneyShares = async (response : any, foundMessages :GroupMeMessage[], secrets:groupmeSecrets) => {
+const findTourneyShares = async (response : any, foundMessages :GroupMeMessage[], secrets:groupmeSecrets, currentTournamentId: number) => {
     const wordleRegex = /^Wordle \d\d\d .\/\d/;
     let stop = false;
     let next = '';
@@ -97,15 +96,15 @@ const findTourneyShares = async (response : any, foundMessages :GroupMeMessage[]
         }
     })
     if (stop) {
-        await parseAndWrite(foundMessages, secrets);
+        await parseAndWrite(foundMessages, secrets, currentTournamentId);
     } else {
-        await findMessages(next, foundMessages, secrets)
+        await findMessages(next, foundMessages, secrets, currentTournamentId)
     }
 };
 
-const gatherWordleMessages = async (secrets) => {
+const gatherWordleMessages = async (secrets, currentTournamentId) => {
     let foundMessages :any = [];
-    await findMessages('', foundMessages, secrets);
+    await findMessages('', foundMessages, secrets, currentTournamentId);
 };
 
 module.exports = { gatherWordleMessages }

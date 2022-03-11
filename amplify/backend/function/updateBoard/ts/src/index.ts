@@ -1,7 +1,7 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 const aws = require('aws-sdk');
 import read from './shared/s3';
-import currentTournamentId from './shared/tournaments';
+import { calculateCurrentTournamentId } from './shared/tournaments';
 import triggerNantzBot from './NantzBot';
 var wordleParser = require('./wordleParser');
 
@@ -40,11 +40,14 @@ const generateParameters = async () :Promise<groupmeSecrets> => {
 }
 
 exports.handler = async (event :APIGatewayProxyHandler) => {
+
+    console.log('bladh')
     const secrets = await generateParameters();
+	const currentTournamentId = await calculateCurrentTournamentId();
 	if (event["NantzBot"]) {
 		const result = await read(`tournament-${currentTournamentId}.json`);
 		await triggerNantzBot(result.data, secrets);
 	} else {
-    	await wordleParser.gatherWordleMessages(secrets);
+    	await wordleParser.gatherWordleMessages(secrets, currentTournamentId);
 	}
 };

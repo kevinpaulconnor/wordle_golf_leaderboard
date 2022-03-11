@@ -1,4 +1,4 @@
-import Hole, { Tournament } from './shared/types';
+import Hole from './shared/types';
 
 export const relationToPar = (scores: (number | null)[], holes: Hole[]) :number => {
     let result = 0;
