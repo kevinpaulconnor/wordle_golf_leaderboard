@@ -18,7 +18,7 @@ const triggerNantzBot = async (tournament:Tournament, secrets: groupmeSecrets) =
 
     const leaders = tournament.leaders.join(', ');
     let message = '';
-    if (tournament.lastDay) {
+    if (tournament.finished) {
         if (tournament.leaders.length > 1) {
             message = `The ${tournament.name} is going to a playoff between ${leaders}`;
         } else {
@@ -28,9 +28,9 @@ const triggerNantzBot = async (tournament:Tournament, secrets: groupmeSecrets) =
     } else {
         let randomMessage = introMessages[Math.floor(Math.random() * introMessages.length)];
         if (tournament.leaders.length > 1) {
-            message = `${randomMessage} The current leaders of ${tournament.name} are ${leaders}`;
+            message = `${randomMessage} The current leaders of the ${tournament.name} are ${leaders}`;
         } else {
-            message = `${randomMessage} The current leader of ${tournament.name} is ${leaders}`;
+            message = `${randomMessage} The current leader of the ${tournament.name} is ${leaders}`;
         }
     }
     message += ' https://wordlegolf.highpostsoftware.com';
