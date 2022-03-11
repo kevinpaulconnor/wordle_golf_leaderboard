@@ -33,7 +33,7 @@ html
   body
     div.container.my-4
 
-      h2.text-center.mb-4 #{name} Leaderboard
+      h2.text-center.mb-4 #{name}
       div.row
         div.col-sm.text-center
           if id !== 0
@@ -55,12 +55,6 @@ html
             each hole in holes
               th.text-center #{hole.number}
             th.text-uppercase.text-center Total
-          tr
-            th.text-uppercase.text-center Par
-
-            each hole in holes
-              th.text-center #{hole.par}
-            th.text-center 72
           tr
             th.text-uppercase.text-center Average
             each hole in holes
