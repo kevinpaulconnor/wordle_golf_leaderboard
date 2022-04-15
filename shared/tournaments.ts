@@ -77,7 +77,13 @@ export const tournaments :Tournament[] = [
         id: 3,
         beforeStartWordle: 282,
         beforeStartTime: 1648357200,
-        overrides: {},
+        overrides: {
+            "6986573": {
+                "id":6986573,
+                "displayName":"Dan Ubilla",
+                "scores":overrideGenerator([{position: 11, value: 7}])
+            },
+        },
     },
     {
         name: "Not *That* Kind of Heritage Classic",
