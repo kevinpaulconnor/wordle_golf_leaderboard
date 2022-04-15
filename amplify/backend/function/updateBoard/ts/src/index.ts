@@ -40,11 +40,10 @@ const generateParameters = async () :Promise<groupmeSecrets> => {
 }
 
 exports.handler = async (event :APIGatewayProxyHandler) => {
-
-    console.log('bladh')
     const secrets = await generateParameters();
-	const currentTournamentId = await calculateCurrentTournamentId();
+	let currentTournamentId = await calculateCurrentTournamentId(false);
 	if (event["NantzBot"]) {
+        currentTournamentId = await calculateCurrentTournamentId(true);
 		const result = await read(`tournament-${currentTournamentId}.json`);
 		await triggerNantzBot(result.data, secrets);
 	} else {

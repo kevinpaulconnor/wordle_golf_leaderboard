@@ -77,7 +77,13 @@ export const tournaments :Tournament[] = [
         id: 3,
         beforeStartWordle: 282,
         beforeStartTime: 1648357200,
-        overrides: {},
+        overrides: {
+            "6986573": {
+                "id":6986573,
+                "displayName":"Dan Ubilla",
+                "scores":overrideGenerator([{position: 11, value: 7}])
+            },
+        },
     },
     {
         name: "Not *That* Kind of Heritage Classic",
@@ -137,14 +143,14 @@ export const tournaments :Tournament[] = [
     },
 ];
 
-export const calculateCurrentTournamentId = async() :Promise<number> => {
+export const calculateCurrentTournamentId = async(todayWritten:boolean) :Promise<number> => {
     let currentTournamentId = 0;
     let previousResultFinished = false;
     for (var i=0; i < tournaments.length; i++) {
         let result = await read(`tournament-${i}.json`);
         if (result === 'NoSuchKey') {
             if (currentTournamentId === 0) {
-                if (previousResultFinished) {
+                if (!todayWritten && previousResultFinished) {
                     currentTournamentId = i;
                 } else {
                     currentTournamentId = i - 1;
