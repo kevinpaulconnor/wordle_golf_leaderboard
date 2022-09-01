@@ -141,6 +141,13 @@ export const tournaments :Tournament[] = [
         beforeStartTime: 1660798800,
         overrides: {},
     },
+    {
+        name: "window.open()",
+        id: 12,
+        beforeStartWordle: 444,
+        beforeStartTime: 1662354000,
+        overrides: {},
+    },
 ];
 
 export const calculateCurrentTournamentId = async(todayWritten:boolean) :Promise<number> => {
