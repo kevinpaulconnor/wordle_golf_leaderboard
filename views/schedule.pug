@@ -15,13 +15,13 @@ html
             th.text-uppercase.text-center Tournament
             th.text-uppercase.text-center Wordles
             th.text-uppercase.text-center Winner
-        tbody
+        tbody 
           each tournament, i in data
             tr.lh-lg
               td.text-center 
-                  a(href=`${i}.html`) #{tournament.name}
+                  a(href=`${i}.html`)=tournament.name
               td.text-center #{tournament.beforeStartWordle + 1} - #{tournament.beforeStartWordle + 18}
               if tournament.finished
-                  td.text-center #{tournament.leaders}
+                  td.text-center=tournament.leaders
               else
                   td

@@ -67,9 +67,9 @@ html
               tr.lh-lg
                 if player.displayName && player.displayName === 'Reilly'
                   td
-                    marquee #{player.displayName}
+                    marquee=player.displayName
                 else if player.displayName 
-                  td #{player.displayName}
+                  td=player.displayName
                 else
                   td
                 each hole, i in holes
