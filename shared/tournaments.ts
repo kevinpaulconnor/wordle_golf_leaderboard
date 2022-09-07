@@ -149,7 +149,7 @@ export const tournaments :Tournament[] = [
         overrides: {},
     },
     {
-        name: "Center for Kids Who Can’t Wordle Good",
+        name: "Center for Kids Who Can't Wordle Good",
         id: 13,
         beforeStartWordle: 462,
         beforeStartTime: 16639092000,
