@@ -42,7 +42,7 @@ const generateParameters = async () :Promise<groupmeSecrets> => {
 exports.handler = async (event :APIGatewayProxyHandler) => {
     const secrets = await generateParameters();
 	let currentTournamentId = await calculateCurrentTournamentId(false);
-	if (event["NantzBot"]) {
+	if (event["NantzBot"] && process.env.ENV === 'main') {
         currentTournamentId = await calculateCurrentTournamentId(true);
 		const result = await read(`tournament-${currentTournamentId}.json`);
 		await triggerNantzBot(result.data, secrets);
