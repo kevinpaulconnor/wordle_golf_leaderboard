@@ -156,12 +156,75 @@ export const tournaments :Tournament[] = [
         overrides: {},
     },
     {
-        name: "2pga2championship",
+        name: "Clash For Couch",
         id: 14,
         beforeStartWordle: 480,
         beforeStartTime: 1665464400,
         overrides: {},
     },
+    {
+        name: "Ty Detmer Open",
+        id: 15,
+        beforeStartWordle: 498,
+        beforeStartTime: 1667019600,
+        overrides: {},
+    },
+    {
+        name: "Spergon Wynn Memorial",
+        id: 16,
+        beforeStartWordle: 516,
+        beforeStartTime: 1668574800,
+        overrides: {},
+    },
+    {
+        name: "Doug Pederson Nationals",
+        id: 17,
+        beforeStartWordle: 534,
+        beforeStartTime: 1670130000,
+        overrides: {},
+    },
+    {
+        name: "Kelly Holcomb Classic",
+        id: 18,
+        beforeStartWordle: 552,
+        beforeStartTime: 1671685200,
+        overrides: {},
+    },
+    {
+        name: "Jeff Garcia Outing",
+        id: 19,
+        beforeStartWordle: 570,
+        beforeStartTime: 1673240400,
+        overrides: {},
+    },
+    {
+        name: "Luke McCown Championship",
+        id: 20,
+        beforeStartWordle: 588,
+        beforeStartTime: 1674795600,
+        overrides: {},
+    },
+    {
+        name: "Dilfer",
+        id: 21,
+        beforeStartWordle: 606,
+        beforeStartTime: 1676350800,
+        overrides: {},
+    },
+    {
+        name: "Charlie Frye Tournament",
+        id: 22,
+        beforeStartWordle: 624,
+        beforeStartTime: 1677906000,
+        overrides: {},
+    },
+    {
+        name: "Derek Anderson Derby",
+        id: 23,
+        beforeStartWordle: 642,
+        beforeStartTime: 1679461200,
+        overrides: {},
+    }
 ];
 
 export const calculateCurrentTournamentId = async(todayWritten:boolean) :Promise<number> => {
