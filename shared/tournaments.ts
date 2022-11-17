@@ -167,7 +167,13 @@ export const tournaments :Tournament[] = [
         id: 15,
         beforeStartWordle: 498,
         beforeStartTime: 1667019600,
-        overrides: {},
+        overrides: {
+            "29615136": {
+                "id":29615136,
+                "displayName":"Nom Nom",
+                "scores":overrideGenerator([{position: 1, value: 3}])
+            },
+        },
     },
     {
         name: "Spergon Wynn Memorial",
