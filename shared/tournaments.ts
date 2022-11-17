@@ -171,7 +171,7 @@ export const tournaments :Tournament[] = [
             "29615136": {
                 "id":29615136,
                 "displayName":"Nom Nom",
-                "scores":overrideGenerator([{position: 1, value: 3}])
+                "scores":overrideGenerator([{position: 0, value: 3}])
             },
         },
     },
