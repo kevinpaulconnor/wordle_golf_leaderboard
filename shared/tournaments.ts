@@ -230,6 +230,13 @@ export const tournaments :Tournament[] = [
         beforeStartWordle: 642,
         beforeStartTime: 1679461200,
         overrides: {},
+    },
+    {
+        name: "Placeholder Classic",
+        id: 24,
+        beforeStartWordle: 642,
+        beforeStartTime: 1681016400,
+        overrides: {},
     }
 ];
 
