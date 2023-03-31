@@ -7,7 +7,9 @@
       "useexperimentalpipelinedtransformer": false,
       "enableiterativegsiupdates": true,
       "secondarykeyasgsi": true,
-      "skipoverridemutationinputtypes": true
+      "skipoverridemutationinputtypes": true,
+      "securityEnhancementNotification": false,
+      "showFieldAuthNotification": false
     },
     "frontend-ios": {
       "enablexcodeintegration": true
@@ -40,6 +42,9 @@
       "rekognition": 1,
       "textract": 1,
       "comprehend": 1
+    },
+    "project": {
+      "overrides": true
     }
   }
 }
