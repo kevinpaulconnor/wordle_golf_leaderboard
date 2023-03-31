@@ -257,6 +257,5 @@ export const calculateCurrentTournamentId = async(todayWritten:boolean) :Promise
             previousResultFinished = result.data.finished;
         }
     }
-    console.log('%%%', currentTournamentId)
     return currentTournamentId;
 }
