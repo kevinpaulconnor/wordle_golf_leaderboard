@@ -232,10 +232,17 @@ export const tournaments :Tournament[] = [
         overrides: {},
     },
     {
-        name: "Placeholder Classic",
+        name: "FIDE Wordle Chess Championship",
         id: 24,
         beforeStartWordle: 660,
         beforeStartTime: 1681018400,
+        overrides: {},
+    },
+    {
+        name: "Placeholder Classic",
+        id: 25,
+        beforeStartWordle: 678,
+        beforeStartTime: 1682575600,
         overrides: {},
     }
 ];
