@@ -239,14 +239,21 @@ export const tournaments :Tournament[] = [
         overrides: {},
     },
     {
-        name: "Placeholder Classic",
+        name: "Blaine Gabbert Brand Wordle Tournament",
         id: 25,
         beforeStartWordle: 678,
         beforeStartTime: 1682575600,
         overrides: {},
+    },
+    {
+        name: "Placeholder Classic",
+        id: 26,
+        beforeStartWordle: 696,
+        beforeStartTime: 1684132800,
+        overrides: {},
     }
 ];
-
+// 15572 is the time difference
 export const calculateCurrentTournamentId = async(todayWritten:boolean) :Promise<number> => {
     let currentTournamentId = 0;
     let previousResultFinished = false;
