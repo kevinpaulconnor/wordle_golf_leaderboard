@@ -246,10 +246,17 @@ export const tournaments :Tournament[] = [
         overrides: {},
     },
     {
-        name: "Placeholder Classic",
+        name: "A.J. Feeley Invitational",
         id: 26,
         beforeStartWordle: 696,
         beforeStartTime: 1684132800,
+        overrides: {},
+    },
+    {
+        name: "Placeholder Classic",
+        id: 27,
+        beforeStartWordle: 714,
+        beforeStartTime: 1685690000,
         overrides: {},
     }
 ];
