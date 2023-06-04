@@ -253,10 +253,17 @@ export const tournaments :Tournament[] = [
         overrides: {},
     },
     {
-        name: "Placeholder Classic",
+        name: "Alex Van Peltathon",
         id: 27,
         beforeStartWordle: 714,
         beforeStartTime: 1685690000,
+        overrides: {},
+    },
+    {
+        name: "Placeholder Classic",
+        id: 28,
+        beforeStartWordle: 732,
+        beforeStartTime: 1687247200,
         overrides: {},
     }
 ];
