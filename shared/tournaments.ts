@@ -260,10 +260,17 @@ export const tournaments :Tournament[] = [
         overrides: {},
     },
     {
-        name: "Placeholder Classic",
+        name: "The Open, presented by Gus Frerotte",
         id: 28,
         beforeStartWordle: 732,
         beforeStartTime: 1687247200,
+        overrides: {},
+    },
+    {
+        name: "Placeholder Classic",
+        id: 29,
+        beforeStartWordle: 750,
+        beforeStartTime: 1688804400,
         overrides: {},
     }
 ];
