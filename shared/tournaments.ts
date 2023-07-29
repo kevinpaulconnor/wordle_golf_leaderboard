@@ -274,10 +274,17 @@ export const tournaments :Tournament[] = [
         overrides: {},
     },
     {
-        name: "Placeholder Classic",
+        name: "Caleb Hanie Championship",
         id: 30,
-        beforeStartWordle: 750,
+        beforeStartWordle: 768,
         beforeStartTime: 1690361600,
+        overrides: {},
+    },
+    {
+        name: "Placeholder Classic",
+        id: 31,
+        beforeStartWordle: 786,
+        beforeStartTime: 1691918800,
         overrides: {},
     }
 ];
